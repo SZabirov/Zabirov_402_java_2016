@@ -12,7 +12,10 @@ public class StoreServiceImpl implements StoreService {
 
     ItemsDao itemsDao;
 
-    public StoreServiceImpl(ItemsDao itemsDao) {
+    public StoreServiceImpl() {
+    }
+
+    public void setItemsDao(ItemsDao itemsDao) {
         this.itemsDao = itemsDao;
     }
 
@@ -22,7 +25,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     public boolean isExist(String itemName) {
-        log.info("Customers checks whether product '" + itemName + "' exists");
+        log.info("Customer checks whether product '" + itemName + "' exists");
         return itemsDao.select(itemName) != null;
     }
 }

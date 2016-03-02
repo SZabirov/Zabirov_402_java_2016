@@ -12,13 +12,18 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
     private File file;
     private List<Item> arr;
 
-    public ItemsDaoFileBasedImpl(File file) throws IOException {
+    public ItemsDaoFileBasedImpl(File file) {
         this.file = file;
         arr = new ArrayList<Item>();
-        loadItems(file, arr);
+            try {
+                loadItems(this.file, arr);
+            } catch (IOException e){
+                throw new IllegalArgumentException();
+            }
     }
 
-    public void delete(String itemName){
+
+    public void delete(String itemName) {
         for (int i = 0; i < arr.size(); i++) {
             if (arr.get(i).getItemName().equals(itemName)) {
                 arr.remove(i);

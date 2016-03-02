@@ -5,22 +5,47 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.itis.inform.store.dao.ItemsDao;
 import ru.itis.inform.store.dao.models.Item;
-import ru.itis.inform.store.services.StoreServiceImpl;
+import ru.itis.inform.store.services.StoreService;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StoreServiceImplTest {
 
-    StoreServiceImpl testedStoreService;
+//    StoreServiceFactory storeServiceFactory = StoreServiceFactory.getInstance();
+//    StoreService testedStoreService = storeServiceFactory.getStoreService();
+//
+//
+//    @Mock
+//    ItemsDao itemsDao = storeServiceFactory.getItemsDao();
+//
+//    @Before
+//    public void setUp() throws Exception {
+//        // Выброс исключения, если пришла какая-либо строка, которая не Tovar
+//        doThrow(new IllegalArgumentException()).when(itemsDao).delete(anyString());
+//        // Делаем stubbing на удаление товара с именем Tovar
+//        doNothing().when(itemsDao).delete("Tovar");
+//        doReturn(null).when(itemsDao).select("Not tovar");
+//        doReturn(new Item("Tovar")).when(itemsDao).select("Tovar");
+//        testedStoreService.setItemsDao(itemsDao);
+//    }
+
+    ApplicationContext context =
+            new ClassPathXmlApplicationContext("app-context.xml");
+    StoreService testedStoreService = (StoreService)context.getBean("storeService");
+
 
     @Mock
-    ItemsDao itemsDao;
+    ItemsDao itemsDao = (ItemsDao)context.getBean("itemsDao");
 
     @Before
     public void setUp() throws Exception {
@@ -28,10 +53,9 @@ public class StoreServiceImplTest {
         doThrow(new IllegalArgumentException()).when(itemsDao).delete(anyString());
         // Делаем stubbing на удаление товара с именем Tovar
         doNothing().when(itemsDao).delete("Tovar");
-        doThrow(new IllegalArgumentException()).when(itemsDao).select(anyString());
+        doReturn(null).when(itemsDao).select("Not tovar");
         doReturn(new Item("Tovar")).when(itemsDao).select("Tovar");
-        testedStoreService = new StoreServiceImpl(itemsDao);
-
+        testedStoreService.setItemsDao(itemsDao);
     }
 
     // Проверяем, корректно ли прошло выполнение метода buy при входном значении Tovar
@@ -54,8 +78,15 @@ public class StoreServiceImplTest {
         verify(itemsDao).select("Tovar");
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testSelectOnIncorrectData() {
-        testedStoreService.isExist("Not tovar");
+    @Test
+    public void testIsExistOnIncorrectData() {
+        assertFalse(testedStoreService.isExist("Not tovar"));
     }
+
+    @Test
+    public void testIsExistsOnCorrectData() {
+        assertTrue(testedStoreService.isExist("Tovar"));
+    }
+
+
 }
