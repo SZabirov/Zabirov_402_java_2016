@@ -61,7 +61,6 @@ public class ItemsDaoTsvBasedImpl implements ItemsDao {
     public Item select(String itemName) {
         Item item = null;
         for (int i = 0; i < allRows.size(); i++){
-            System.out.println(allRows.get(i)[0]/* + " " + allRows.get(i)[1]*/);
             if (allRows.get(i)[0].equals(itemName)){
                 item = new Item(itemName);
                 item.setPrice(Integer.parseInt(allRows.get(i)[1]));
