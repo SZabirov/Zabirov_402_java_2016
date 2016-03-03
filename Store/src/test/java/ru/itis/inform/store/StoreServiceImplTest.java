@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.itis.inform.store.dao.ItemsDao;
 import ru.itis.inform.store.dao.models.Item;
 import ru.itis.inform.store.services.StoreService;
@@ -39,13 +39,19 @@ public class StoreServiceImplTest {
 //        testedStoreService.setItemsDao(itemsDao);
 //    }
 
+//    ApplicationContext context =
+//            new ClassPathXmlApplicationContext("app-context.xml");
+//    StoreService testedStoreService = (StoreService)context.getBean("storeService");
     ApplicationContext context =
-            new ClassPathXmlApplicationContext("app-context.xml");
-    StoreService testedStoreService = (StoreService)context.getBean("storeService");
+        new AnnotationConfigApplicationContext(StoreConfiguration.class);
+    StoreService testedStoreService = (StoreService)context.getBean(StoreService.class);
 
+
+//    @Mock
+//    ItemsDao itemsDao = (ItemsDao)context.getBean("itemsDao");
 
     @Mock
-    ItemsDao itemsDao = (ItemsDao)context.getBean("itemsDao");
+    ItemsDao itemsDao = (ItemsDao)context.getBean(ItemsDao.class);
 
     @Before
     public void setUp() throws Exception {

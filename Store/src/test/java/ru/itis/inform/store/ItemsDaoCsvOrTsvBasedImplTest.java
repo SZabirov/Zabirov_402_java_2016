@@ -1,8 +1,9 @@
 package ru.itis.inform.store;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.itis.inform.store.dao.ItemsDao;
 import ru.itis.inform.store.dao.ItemsDaoCsvBasedImpl;
 import ru.itis.inform.store.dao.ItemsDaoTsvBasedImpl;
@@ -21,17 +22,25 @@ public class ItemsDaoCsvOrTsvBasedImplTest {
 //        assertEquals(expectedItem, itemsDao.select("Milk"));
 //    }
 
+    ItemsDao itemsDao;
+
+    @Before
+    public void setup(){
+        //ApplicationContext context =
+        //        new ClassPathXmlApplicationContext("app-context.xml");
+        //itemsDao = (ItemsDao)context.getBean("itemsDao");
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(StoreConfiguration.class);
+        itemsDao = (ItemsDao)context.getBean(ItemsDao.class);
+    }
+
     @Test
     public void testSelect(){
-        ApplicationContext context =
-                new ClassPathXmlApplicationContext("app-context.xml");
-        ItemsDao itemsDao = (ItemsDao)context.getBean("itemsDao");
+
         if (itemsDao instanceof ItemsDaoCsvBasedImpl || itemsDao instanceof ItemsDaoTsvBasedImpl) {
             Item expectedItem = new Item("Milk");
             expectedItem.setPrice(350);
             assertEquals(expectedItem, itemsDao.select("Milk"));
         }
     }
-
-
 }
