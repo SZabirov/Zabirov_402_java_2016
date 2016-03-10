@@ -8,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.itis.inform.store.dao.ItemsDao;
+import ru.itis.inform.store.dao.ItemsDaoCsvBasedImpl;
 import ru.itis.inform.store.dao.models.Item;
 import ru.itis.inform.store.services.StoreService;
 
