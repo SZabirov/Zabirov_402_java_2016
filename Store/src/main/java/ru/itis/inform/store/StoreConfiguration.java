@@ -1,9 +1,13 @@
 package ru.itis.inform.store;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.itis.inform.store.dao.ItemsDao;
 import ru.itis.inform.store.dao.ItemsDaoCsvBasedImpl;
+import ru.itis.inform.store.dao.ItemsDaoFileBasedImpl;
+import ru.itis.inform.store.dao.ItemsDaoTsvBasedImpl;
 import ru.itis.inform.store.services.StoreService;
 import ru.itis.inform.store.services.StoreServiceImpl;
 
@@ -33,7 +37,20 @@ public class StoreConfiguration {
     }
 
     @Bean
+    public ItemsDao itemsDaoTsv(){
+        return new ItemsDaoTsvBasedImpl(new File(getProperties().getProperty("filePath")));
+    }
+
+    @Bean
+    public ItemsDao itemsDaoFile(){
+        return new ItemsDaoFileBasedImpl(new File(getProperties().getProperty("filePath")));
+    }
+
+    @Bean
+
     public StoreService storeService(){
         return new StoreServiceImpl();
     }
+
+
 }

@@ -5,21 +5,27 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.itis.inform.store.dao.ItemsDao;
 import ru.itis.inform.store.dao.ItemsDaoCsvBasedImpl;
 import ru.itis.inform.store.dao.models.Item;
 import ru.itis.inform.store.services.StoreService;
 
 import java.io.IOException;
-
+import ru.itis.inform.store.StoreConfiguration;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
+
 @RunWith(MockitoJUnitRunner.class)
+//@ContextConfiguration(locations = { "/ru/itis/inform/store/StoreConfiguration.java"})
 public class StoreServiceImplTest {
 
 //    StoreServiceFactory storeServiceFactory = StoreServiceFactory.getInstance();
@@ -43,16 +49,22 @@ public class StoreServiceImplTest {
 //    ApplicationContext context =
 //            new ClassPathXmlApplicationContext("app-context.xml");
 //    StoreService testedStoreService = (StoreService)context.getBean("storeService");
-    ApplicationContext context =
-        new AnnotationConfigApplicationContext(StoreConfiguration.class);
-    StoreService testedStoreService = (StoreService)context.getBean(StoreService.class);
+
+//        ApplicationContext context =
+//        new AnnotationConfigApplicationContext(StoreConfiguration.class);
+//    StoreService testedStoreService = (StoreService)context.getBean(StoreService.class);
+
+    StoreService testedStoreService;
 
 
 //    @Mock
 //    ItemsDao itemsDao = (ItemsDao)context.getBean("itemsDao");
 
+    //    @Mock
+//    ItemsDao itemsDao = (ItemsDao)context.getBean(ItemsDao.class);
     @Mock
-    ItemsDao itemsDao = (ItemsDao)context.getBean(ItemsDao.class);
+    ItemsDao itemsDao;
+
 
     @Before
     public void setUp() throws Exception {

@@ -26,11 +26,12 @@ public class ItemsDaoCsvOrTsvBasedImplTest {
 
     @Before
     public void setup(){
-        //ApplicationContext context =
-        //        new ClassPathXmlApplicationContext("app-context.xml");
-        //itemsDao = (ItemsDao)context.getBean("itemsDao");
+//        ApplicationContext context =
+//                new ClassPathXmlApplicationContext("app-context.xml");
+//        itemsDao = (ItemsDao)context.getBean("itemsDao");
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(StoreConfiguration.class);
+        //@Qualifier("itemsDaoCsv")
         itemsDao = (ItemsDao)context.getBean(ItemsDao.class);
     }
 
@@ -38,6 +39,7 @@ public class ItemsDaoCsvOrTsvBasedImplTest {
     public void testSelect(){
 
         if (itemsDao instanceof ItemsDaoCsvBasedImpl || itemsDao instanceof ItemsDaoTsvBasedImpl) {
+            System.out.println("Yes, it is");
             Item expectedItem = new Item("Milk");
             expectedItem.setPrice(350);
             assertEquals(expectedItem, itemsDao.select("Milk"));

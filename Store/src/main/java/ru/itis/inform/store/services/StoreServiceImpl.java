@@ -4,6 +4,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.itis.inform.store.dao.ItemsDao;
 
 public class StoreServiceImpl implements StoreService {
@@ -15,6 +17,8 @@ public class StoreServiceImpl implements StoreService {
     public StoreServiceImpl() {
     }
 
+    @Autowired
+    @Qualifier("itemsDaoTsv")
     public void setItemsDao(ItemsDao itemsDao) {
         this.itemsDao = itemsDao;
     }
