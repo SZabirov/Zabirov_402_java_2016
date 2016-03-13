@@ -1,19 +1,33 @@
 package ru.itis.inform.store.dao;
 
+import org.springframework.stereotype.Component;
 import ru.itis.inform.store.dao.models.Item;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+@Component
 public class ItemsDaoFileBasedImpl implements ItemsDao {
 
     private File file;
     private List<Item> arr;
 
-    public ItemsDaoFileBasedImpl(File file) {
-        this.file = file;
+    Properties getProperties(){
+        Properties properties = new Properties();
+        try {
+            properties.load(
+                    new FileInputStream("C:\\javaclasses\\Store\\src\\main\\resources\\store.properties"));
+        } catch (IOException e){
+            throw new IllegalArgumentException();
+        }
+        return properties;
+    }
+
+    public ItemsDaoFileBasedImpl() {
+        file = new File(getProperties().getProperty("filePath"));
         arr = new ArrayList<Item>();
             try {
                 loadItems(this.file, arr);

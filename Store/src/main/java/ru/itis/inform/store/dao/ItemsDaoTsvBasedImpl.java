@@ -4,12 +4,15 @@ import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;
 import com.univocity.parsers.tsv.TsvWriter;
 import com.univocity.parsers.tsv.TsvWriterSettings;
+import org.springframework.stereotype.Component;
 import ru.itis.inform.store.dao.models.Item;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
+@Component
 public class ItemsDaoTsvBasedImpl implements ItemsDao {
 
     TsvParserSettings settings;
@@ -17,8 +20,19 @@ public class ItemsDaoTsvBasedImpl implements ItemsDao {
     List<String[]> allRows;
     File file;
 
-    public ItemsDaoTsvBasedImpl(File file) {
-        this.file = file;
+    Properties getProperties(){
+        Properties properties = new Properties();
+        try {
+            properties.load(
+                    new FileInputStream("C:\\javaclasses\\Store\\src\\main\\resources\\store.properties"));
+        } catch (IOException e){
+            throw new IllegalArgumentException();
+        }
+        return properties;
+    }
+
+    public ItemsDaoTsvBasedImpl() {
+        file = new File(getProperties().getProperty("filePath"));
         settings = new TsvParserSettings();
         settings.getFormat().setLineSeparator("\n");
         parser = new TsvParser(settings);

@@ -4,12 +4,15 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import com.univocity.parsers.csv.CsvWriter;
 import com.univocity.parsers.csv.CsvWriterSettings;
+import org.springframework.stereotype.Component;
 import ru.itis.inform.store.dao.models.Item;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
+@Component
 public class ItemsDaoCsvBasedImpl implements ItemsDao {
 
     CsvParserSettings settings;
@@ -17,8 +20,20 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
     List<String[]> allRows;
     File file;
 
-    public ItemsDaoCsvBasedImpl(File file) {
-        this.file = file;
+    Properties getProperties(){
+        Properties properties = new Properties();
+        try {
+            properties.load(
+                    new FileInputStream("C:\\javaclasses\\Store\\src\\main\\resources\\store.properties"));
+        } catch (IOException e){
+            throw new IllegalArgumentException();
+        }
+        return properties;
+    }
+
+
+    public ItemsDaoCsvBasedImpl() {
+        file = new File(getProperties().getProperty("filePath"));
         settings = new CsvParserSettings();
         settings.getFormat().setLineSeparator("\n");
         parser = new CsvParser(settings);
