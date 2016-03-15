@@ -11,7 +11,7 @@ public class TestMain {
     public static void main(String[] args) {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(StoreConfiguration.class);
-        storeService = (StoreService) context.getBean("storeService");
+        storeService = (StoreService) context.getBean("storeServiceImpl");
         System.out.println(storeService.isExist("Bread"));
     }
 }
