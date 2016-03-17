@@ -11,7 +11,6 @@ import ru.itis.inform.store.services.StoreServiceImpl;
 import java.util.List;
 
 @RestController
-
 public class StoreController {
 
     @Autowired
@@ -19,7 +18,7 @@ public class StoreController {
 
     @RequestMapping(value = "/items", method = RequestMethod.GET)
     public List<Item> getItems(){
-        return null;
+        return storeService.getAllItems();
     }
 
 }

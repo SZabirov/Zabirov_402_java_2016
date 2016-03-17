@@ -2,6 +2,9 @@ package ru.itis.inform.store.services;
 
 
 import ru.itis.inform.store.dao.ItemsDao;
+import ru.itis.inform.store.dao.models.Item;
+
+import java.util.List;
 
 public interface StoreService {
     /**
@@ -23,4 +26,6 @@ public interface StoreService {
      * @param itemsDao
      */
     void setItemsDao(ItemsDao itemsDao);
+
+    List<Item> getAllItems();
 }

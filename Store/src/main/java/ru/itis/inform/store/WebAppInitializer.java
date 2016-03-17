@@ -2,7 +2,10 @@ package ru.itis.inform.store;
 
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+@EnableWebMvc
 
 @Component
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
