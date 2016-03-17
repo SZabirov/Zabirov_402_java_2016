@@ -85,4 +85,9 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
         fw.close();
     }
 
+    @Override
+    public List<Item> getAllItems() {
+        return arr;
+    }
+
 }

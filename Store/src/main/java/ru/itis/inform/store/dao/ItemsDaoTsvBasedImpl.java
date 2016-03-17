@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import ru.itis.inform.store.dao.models.Item;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -81,5 +82,16 @@ public class ItemsDaoTsvBasedImpl implements ItemsDao {
             }
         }
         return item;
+    }
+
+    @Override
+    public List<Item> getAllItems() {
+        List<Item> list = new ArrayList<>();
+        for (String[] stringArray : allRows){
+            Item item = new Item(stringArray[0]);
+            item.setPrice(Integer.parseInt(stringArray[1]));
+            list.add(item);
+        }
+        return list;
     }
 }
