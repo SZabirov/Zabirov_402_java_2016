@@ -24,12 +24,10 @@ public class StoreServiceImpl implements StoreService {
     }
 
     public void buy(String itemName) {
-        log.info("Customer's buying product '" + itemName + "'");
         itemsDao.delete(itemName);
     }
 
     public boolean isExist(String itemName) {
-        log.info("Customer checks whether product '" + itemName + "' exists");
         return itemsDao.select(itemName) != null;
     }
 }
