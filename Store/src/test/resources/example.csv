@@ -3,6 +3,6 @@
 # 2 double quotes ("") are used as the escape sequence for quoted fields, as per the RFC4180 standard
 #
 
-Milk,350
-Bread,4900
-"Jeep,Grand Cherokee",479
+1,Milk,350
+2,Bread,4900
+3,"Jeep,Grand Cherokee",479

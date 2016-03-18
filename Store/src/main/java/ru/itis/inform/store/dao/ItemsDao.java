@@ -25,4 +25,17 @@ public interface ItemsDao {
      * @return
      */
     List<Item> getAllItems();
+
+    /**
+     * Добавляет <code>Item item</code>
+     * @param item
+     */
+    void addItem(Item item);
+
+    /**
+     * Возвращает <code>Item item</code> с заданным <code>id</code>
+     * @param id
+     * @return
+     */
+    Item selectItemById(int id);
 }

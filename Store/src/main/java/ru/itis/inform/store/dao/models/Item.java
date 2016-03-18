@@ -6,6 +6,17 @@ import java.util.Objects;
 
 public class Item {
 
+    private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+
+    }
+
     private String itemName;
 
     private double price;
@@ -22,6 +33,7 @@ public class Item {
     public String getItemName() {
         return itemName;
     }
+
 
     public Item(String itemName) {
         this.itemName = itemName;

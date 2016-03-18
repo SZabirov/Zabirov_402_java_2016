@@ -27,5 +27,18 @@ public interface StoreService {
      */
     void setItemsDao(ItemsDao itemsDao);
 
+    /**
+     * Возвращает список всех <code>Items</code>
+     * @return
+     */
     List<Item> getAllItems();
+
+    /**
+     * Возвращает <code>Item</code> по <code>id</code>
+     * @param id
+     * @return
+     */
+    Item getItem (int id);
+
+    void postItem(Item item);
 }

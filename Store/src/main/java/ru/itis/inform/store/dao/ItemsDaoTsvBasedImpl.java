@@ -76,9 +76,10 @@ public class ItemsDaoTsvBasedImpl implements ItemsDao {
     public Item select(String itemName) {
         Item item = null;
         for (int i = 0; i < allRows.size(); i++){
-            if (allRows.get(i)[0].equals(itemName)){
+            if (allRows.get(i)[1].equals(itemName)){
                 item = new Item(itemName);
-                item.setPrice(Integer.parseInt(allRows.get(i)[1]));
+                item.setId(Integer.parseInt(allRows.get(i)[0]));
+                item.setPrice(Integer.parseInt(allRows.get(i)[2]));
             }
         }
         return item;
@@ -93,5 +94,30 @@ public class ItemsDaoTsvBasedImpl implements ItemsDao {
             list.add(item);
         }
         return list;
+    }
+
+    @Override
+    public void addItem(Item item) {
+        for (int i = 0; i < allRows.size(); i++) {
+            String [] array = new String[3];
+            array[0] = ((Integer)item.getId()).toString();
+            array[1] = item.getItemName();
+            array[3] = ((Double)item.getPrice()).toString();
+            allRows.add(array);
+        }
+        recordFile(file);
+    }
+
+    @Override
+    public Item selectItemById(int id) {
+        Item item = null;
+        for (int i = 0; i < allRows.size(); i++){
+            if (Integer.parseInt(allRows.get(i)[0]) == id){
+                item = new Item(allRows.get(i)[1]);
+                item.setId(Integer.parseInt(allRows.get(i)[0]));
+                item.setPrice(Integer.parseInt(allRows.get(i)[2]));
+            }
+        }
+        return item;
     }
 }

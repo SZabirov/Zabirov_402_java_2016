@@ -28,6 +28,16 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public void postItem(Item item) {
+        itemsDao.addItem(item);
+    }
+
+    @Override
+    public Item getItem(int id) {
+        return itemsDao.selectItemById(id);
+    }
+
+    @Override
     public List<Item> getAllItems() {
         return itemsDao.getAllItems();
     }
