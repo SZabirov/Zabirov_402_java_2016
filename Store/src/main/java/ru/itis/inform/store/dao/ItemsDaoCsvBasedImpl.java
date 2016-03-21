@@ -21,12 +21,12 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
     List<String[]> allRows;
     File file;
 
-    Properties getProperties(){
+    Properties getProperties() {
         Properties properties = new Properties();
         try {
             properties.load(
                     new FileInputStream("C:\\javaclasses\\Store\\src\\main\\resources\\store.properties"));
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new IllegalArgumentException();
         }
         return properties;
@@ -41,7 +41,7 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
         parseLines(this.file);
     }
 
-    private void parseLines(File file){
+    private void parseLines(File file) {
         try {
             allRows = parser.parseAll(new FileReader(file));
         } catch (FileNotFoundException e) {
@@ -49,7 +49,7 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
         }
     }
 
-    private void recordFile(File file){
+    private void recordFile(File file) {
         List<Object[]> list = new LinkedList<Object[]>();
         for (int i = 0; i < allRows.size(); i++) {
             list.add(allRows.get(i));
@@ -58,7 +58,7 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
             FileWriter fw = new FileWriter(file);
             CsvWriter writer = new CsvWriter(fw, new CsvWriterSettings());
             writer.writeRowsAndClose(list);
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new IllegalArgumentException();
         }
     }
@@ -76,8 +76,8 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
     @Override
     public Item select(String itemName) {
         Item item = null;
-        for (int i = 0; i < allRows.size(); i++){
-            if (allRows.get(i)[1].equals(itemName)){
+        for (int i = 0; i < allRows.size(); i++) {
+            if (allRows.get(i)[1].equals(itemName)) {
                 item = new Item(itemName);
                 item.setId(Integer.parseInt(allRows.get(i)[0]));
                 item.setPrice(Integer.parseInt(allRows.get(i)[2]));
@@ -89,9 +89,11 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
     @Override
     public List<Item> getAllItems() {
         List<Item> list = new ArrayList<>();
-        for (String[] stringArray : allRows){
+        int n = allRows.size();
+        for (int i = 0; i < n; i++) {
+            String[] stringArray = allRows.get(i);
             Item item = new Item(stringArray[1]);
-            item.setPrice(Integer.parseInt(stringArray[2]));
+            item.setPrice(Double.parseDouble(stringArray[2]));
             item.setId(Integer.parseInt(stringArray[0]));
             list.add(item);
         }
@@ -100,21 +102,19 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
 
     @Override
     public void addItem(Item item) {
-        for (int i = 0; i < allRows.size(); i++) {
-            String [] array = new String[3];
-            array[0] = ((Integer)item.getId()).toString();
-            array[1] = item.getItemName();
-            array[3] = ((Double)item.getPrice()).toString();
-            allRows.add(array);
-        }
+        String[] array = new String[3];
+        array[0] = ((Integer) item.getId()).toString();
+        array[1] = item.getItemName();
+        array[2] = ((Double) item.getPrice()).toString();
+        allRows.add(array);
         recordFile(file);
     }
 
     @Override
     public Item selectItemById(int id) {
         Item item = null;
-        for (int i = 0; i < allRows.size(); i++){
-            if (Integer.parseInt(allRows.get(i)[0]) == id){
+        for (int i = 0; i < allRows.size(); i++) {
+            if (Integer.parseInt(allRows.get(i)[0]) == id) {
                 item = new Item(allRows.get(i)[1]);
                 item.setId(Integer.parseInt(allRows.get(i)[0]));
                 item.setPrice(Integer.parseInt(allRows.get(i)[2]));

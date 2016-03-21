@@ -17,9 +17,16 @@ public class Item {
 
     }
 
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     private String itemName;
 
     private double price;
+
+    public Item() {
+    }
 
     public void setPrice(double price) {
         this.price = price;

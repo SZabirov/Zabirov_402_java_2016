@@ -88,9 +88,11 @@ public class ItemsDaoTsvBasedImpl implements ItemsDao {
     @Override
     public List<Item> getAllItems() {
         List<Item> list = new ArrayList<>();
-        for (String[] stringArray : allRows){
+        int n = allRows.size();
+        for (int i = 0; i < n; i++){
+            String[] stringArray = allRows.get(i);
             Item item = new Item(stringArray[1]);
-            item.setPrice(Integer.parseInt(stringArray[2]));
+            item.setPrice(Double.parseDouble(stringArray[2]));
             item.setId(Integer.parseInt(stringArray[0]));
             list.add(item);
         }
@@ -99,13 +101,11 @@ public class ItemsDaoTsvBasedImpl implements ItemsDao {
 
     @Override
     public void addItem(Item item) {
-        for (int i = 0; i < allRows.size(); i++) {
-            String [] array = new String[3];
-            array[0] = ((Integer)item.getId()).toString();
-            array[1] = item.getItemName();
-            array[3] = ((Double)item.getPrice()).toString();
-            allRows.add(array);
-        }
+        String[] array = new String[3];
+        array[0] = ((Integer) item.getId()).toString();
+        array[1] = item.getItemName();
+        array[2] = ((Double) item.getPrice()).toString();
+        allRows.add(array);
         recordFile(file);
     }
 
