@@ -90,8 +90,9 @@ public class ItemsDaoCsvBasedImpl implements ItemsDao {
     public List<Item> getAllItems() {
         List<Item> list = new ArrayList<>();
         for (String[] stringArray : allRows){
-            Item item = new Item(stringArray[0]);
-            item.setPrice(Integer.parseInt(stringArray[1]));
+            Item item = new Item(stringArray[1]);
+            item.setPrice(Integer.parseInt(stringArray[2]));
+            item.setId(Integer.parseInt(stringArray[0]));
             list.add(item);
         }
         return list;
