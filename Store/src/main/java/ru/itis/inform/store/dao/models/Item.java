@@ -12,7 +12,14 @@ public class Item {
         this.id = id;
     }
 
+    public Item(int id, String itemName, double price) {
+        this.id = id;
+        this.itemName = itemName;
+        this.price = price;
+    }
+
     public int getId() {
+
         return id;
 
     }

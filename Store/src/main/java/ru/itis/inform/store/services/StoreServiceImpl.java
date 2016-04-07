@@ -2,8 +2,6 @@ package ru.itis.inform.store.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.itis.inform.store.dao.ItemsDao;
 import ru.itis.inform.store.dao.models.Item;
@@ -15,9 +13,9 @@ public class StoreServiceImpl implements StoreService {
 
     private Logger log = LoggerFactory.getLogger(StoreService.class);
 
-    @Autowired
-    @Qualifier("itemsDaoCsvBasedImpl")
-    ItemsDao itemsDao;
+//    @Autowired
+//    @Qualifier("itemsDaoCsvBasedImpl")
+    private ItemsDao itemsDao;
 
     public StoreServiceImpl() {
     }
